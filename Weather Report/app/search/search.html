@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-12 search">
+		<noyan-search-box></noyan-search-box>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 cities">
+		<table class="table">
+			<tbody>
+				<tr ng-repeat="city in cities">
+					<td>
+						<img src="{{getWeatherImgUrl(city.weather[0].icon)}}">
+					</td>
+					<td>
+						<b><a href="#/weather/{{city.id}}">{{city.name}}, {{city.sys.country}}</a></b>
+						<img src="{{getCountryFlagImgUrl(city.sys.country)}}">
+						<b><i>{{city.weather[0].description}}</i></b>
+						<p><span class="badge badge-info">{{kelvinToDegree(city.main.temp) | number}}°C</span>Temperature from {{kelvinToDegree(city.main.temp_min)| number}} to {{kelvinToDegree(city.main.temp_max)| number}} °C, Wind {{city.wind.speed}} m/s. Clouds {{city.clouds.all}}%, {{city.main.pressure}} hpa</p>
+						<p>
+							Geo cords
+							<a href="#/weather/{{city.id}}">[{{city.coord.lan}}, {{city.coord.lat}}]</a>
+						</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
