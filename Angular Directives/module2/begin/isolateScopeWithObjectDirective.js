@@ -4,8 +4,10 @@
 
   app.directive('isolateScopeWithObject', function () {
       return {
-
-          template: 'Name: {{datasource.name}} Street: {{datasource.street}}' +
+      	  scope: {
+      	  	datasource: '='
+      	  },
+          template: template: 'Name: {{datasource.name}} Street: {{datasource.street}}' +
                     '<br /><button ng-click="datasource.name=\'Fred\'">' +
                     'Change</button>'
       };

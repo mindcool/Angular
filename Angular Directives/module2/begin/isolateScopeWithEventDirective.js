@@ -5,10 +5,11 @@
   app.directive('isolateScopeWithEvent', function () {
       return {
           scope: {
-              datasource: '='
+              datasource: '=',
+              action: '&'
           },
           template: 'Name: {{datasource.name}} Street: {{datasource.street}} ' +
-                    '<button>Change Data</button>'
+                    '<button ng-click="action()">Change Data</button>'
       };
   });
 
