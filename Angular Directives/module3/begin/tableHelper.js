@@ -1,20 +1,17 @@
 (function() {
 
-  var tableHelper = function () {
-
+  var tableHelper = function() {
       var template = '<div class="tableHelper"></div>',
 
-      link = function(scope, element, attrs) {
-          var headerCols = [],
-              tableStart = '<table>',
-              tableEnd = '</table>',
-              table = '',
-              visibleProps = [],
-              sortCol = null,
-              sortDir = 1;
+          link = function(scope, element, attrs) {
+              var headerCols = [],
+                  tableStart = '<table>',
+                  tableEnd = '</table>',
+                  table = '',
+                  visibleProps = [],
+                  sortCol = null,
+                  sortDir = 1;
 
-          //Watch for changes to the collection so that the table gets
-          //re-rendered as necessary
           scope.$watchCollection('datasource', render);
           wireEvents();
 
@@ -118,13 +115,13 @@
               else return null;
           }
 
-      };
+          };
 
       return {
           restrict: 'E',
           scope: {
-            columnmap: '=',
-            datasource: '='
+              columnmap: '=',
+              datasource: '='
           },
           link: link,
           template: template

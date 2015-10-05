@@ -1,12 +1,26 @@
 (function() {
+  var linkDemo = function() {
+  	return {
+  		restrict: 'A',
+  		link: function(scope, element, attrs){
+  			element.on('click', function(){
+  				element.html('You Clicked Me');
+  			});
+
+  			element.on('mouseenter', function(){
+  				element.css('background-color', 'yellow');
+  			});
+
+  			element.on('mouseleave', function(){
+  				element.css('background-color', 'white');
+  			});
+  		}
+  	};
+  };
 
   var app = angular.module('directivesModule', []);
 
-  app.directive('linkDemo', function () {
-      return {
-
-      };
-  });
+  app.directive('linkDemo', linkDemo);
 
 }());
 
