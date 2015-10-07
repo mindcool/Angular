@@ -1,9 +1,16 @@
-var app = angular.module('flapperNews', []);
+var app = angular.module('flapperNews', ['ui-router']);
+app.factory('posts', [function(){
+  //we are creating an object so in the future when we can add new objects and methods to our service
+  var posts = {posts: []};
+  return posts;
+}]);
 
-app.controller('MainCtrl', [
-'$scope',
-function($scope){
+app.controller('MainCtrl',[
+'$scope','posts',
+function($scope, posts){
 
+  $scope.posts = posts.posts;
+  
   $scope.posts = [
     {title: 'post 1', upvotes: 5},
     {title: 'post 2', upvotes: 2},
