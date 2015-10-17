@@ -1,0 +1,12 @@
+
+td.tdRight{
+  text-align: right;
+}
+
+.table td.tdCenter {
+  text-align: center;
+}
+
+.table-nonfluid {
+   width: auto;
+}

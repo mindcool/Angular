@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Xact Pets</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Xactware Pet Market">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.9/toaster.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body ng-app="XactPet">
+  <toaster-container toaster-options="{'time-out': 3000, 'close-button': true}"></toaster-container>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <h1>
+                    <a href="index.htm">
+                        <img src="img/logo.png" alt="logo"/>
+                    </a>
+                </h1>
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.9/toaster.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/store.js"></script>
+    <script src="scripts/services/appData.js"></script>
+</body>
+</html>
