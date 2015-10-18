@@ -14,6 +14,16 @@
 </form>
 <table class="table table-bordered table-striped">
   <thead>
+    <tr class="well">
+    <td class="tdRight" colspan="4">
+      <a href="#/cart" title="go to shopping cart"
+         ng-disabled="getTotalCount() < 1">
+         <i class="icon-shopping-cart" />
+         <b>{{getTotalCount()}}</b> items,
+         <b>{{getTotalPrice() | currency}}</b>
+      </a>
+    </td>
+    </tr>
     <tr>
         <td>            
         </td>
@@ -48,8 +58,8 @@
           {{product.price | currency}}
         </td>
         <td class="tdCenter">
-          <a href="#" 
-           ng-click="cart.addItem(product.id, product.name, product.price, 1)">
+          <a href="#/" 
+           ng-click="addItem(product.id, product.name, product.price, 1)">
              add to cart
           </a>
         </td>
@@ -58,11 +68,11 @@
   <tfoot>
     <tr class="well">
     <td class="tdRight" colspan="4">
-      <a href="default.htm#/cart" title="go to shopping cart"
-         ng-disabled="cart.getTotalCount() < 1">
+      <a href="#/cart" title="go to shopping cart"
+         ng-disabled="getTotalCount() < 1">
          <i class="icon-shopping-cart" />
-         <b>{{cart.getTotalCount()}}</b> items,
-         <b>{{cart.getTotalPrice() | currency}}</b>
+         <b>{{getTotalCount()}}</b> items,
+         <b>{{getTotalPrice() | currency}}</b>
       </a>
     </td>
     </tr>

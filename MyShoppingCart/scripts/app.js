@@ -6,7 +6,7 @@ var app = angular
         templateUrl: 'scripts/views/store.html',
         controller: 'StoreController'
       })
-      .when('/product/:id', {
+      .when('/products/:id', {
         templateUrl: 'scripts/views/product.html',
         controller: 'StoreController'
       })

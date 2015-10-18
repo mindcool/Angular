@@ -1,3 +1,24 @@
-app.service("cartData", function($http) {
-	this.
+app.factory("cartData", function($q, storage) {
+
+	var items = ( storage.extractItem( "items" ) || [] );
+
+    storage.onBeforePersist(
+        function handlePersist() {
+            storage.setItem( "items", items );
+        }
+    );
+
+    //Return public API
+    return({
+    	addItem: addItem,
+    	deleteItem: deleteItem,
+    	getItems: getItems
+    });
+
+    // ---
+    // PUBLIC METHODS.
+    // ---
+
+    
+
 });
