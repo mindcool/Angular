@@ -1,0 +1,76 @@
+<p class="text-info">
+    <img ng-src="img/products/{{product.sku}}.jpg" alt="{{product.name}}"/>
+    {{product.name}}: {{product.price | currency}}<br />
+</p>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span8">
+            <!-- product info -->
+            <table class="table table-bordered">
+                <tr class="well">
+                    <td class="tdRight" colspan="3" >
+                        <a href="#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
+                            <i class="icon-shopping-cart"></i>
+                            <b>{{getTotalCount()}}</b> items, <b>{{getTotalPrice() | currency}}</b>
+                            <span ng-show="getTotalCount(product.id) > 0"><br />this item is in the cart</span>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tdCenter">
+                        <img ng-src="img/products/{{product.id}}m.jpg" alt="{{product.name}}" />
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a data-toggle="tab" data-target="#home">Description</a></li>
+                          <li><a data-toggle="tab" data-target="#menu1">Directions</a></li>
+                          <li><a data-toggle="tab" data-target="#menu2">Ingredients</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div id="home" class="tab-pane fade in active">
+                            <span ng-bind-html="product.longdescription"></span>
+                          </div>
+                          <div id="menu1" class="tab-pane fade">
+                            <span ng-bind-html="product.directions"></span>
+                          </div>
+                          <div id="menu2" class="tab-pane fade">
+                            <span ng-bind-html="product.ingredients"></span>
+                          </div>
+                        </div>
+                </tr>
+
+                <tr class="well">
+                    <td class="tdRight" colspan="3" >
+                        <a href="#/cart" title="go to shopping cart" ng-disabled="getTotalCount() < 1">
+                            <i class="icon-shopping-cart"></i>
+                            <b>{{getTotalCount()}}</b> items, <b>{{getTotalPrice() | currency}}</b>
+                            <span ng-show="getTotalCount(product.id) > 0"><br />this item is in the cart</span>
+                        </a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <!-- buttons -->
+        <div class="span4">
+            <button 
+                class="btn btn-block btn-success" 
+                ng-click="addItem(product.id, product.name, product.price, 1)">
+                <i class="icon-shopping-cart icon-white" /> add to cart
+            </button>
+            <button
+                class="btn btn-block btn-danger" 
+                ng-click="addItem(product.id, product.name, product.price, -10000)"
+                ng-disabled="getTotalCount(product.id) < 1">
+                <i class="icon-trash icon-white" /> remove from cart
+            </button>
+            <a 
+                class="btn btn-block" 
+                href="#/">
+                <i class="icon-chevron-left" /> back to store
+            </a>
+        </div>
+    </div>
+</div>

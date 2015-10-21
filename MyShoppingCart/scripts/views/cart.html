@@ -1,0 +1,114 @@
+<p class="text-info" ng-hide="checkoutform">
+    Thanks for shopping at the Xact Pets<br />
+    This is your shopping cart. Here you can edit the items, 
+    go back to the store, clear the cart, or check out.
+</p>
+<h1 ng-show="checkoutform" style="color:rgb(57, 150, 26)">Checkout Report:</h1>
+<div class="container-fluid" ng-show="checkoutform">
+    <div class="row-fluid">
+        <div class="span8" ng-show="checkoutform">
+            <span ng-bind-html="checkoutform"></span>
+        </div>
+        <div class="span4">
+            <p class="text-info">
+                <a 
+                    class="btn btn-block" href="#/">
+                    <i class="icon-chevron-left" /> back to store
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" ng-hide="checkoutform">
+    <div class="row-fluid">
+        <div class="span8">
+
+            <!-- items -->
+            <table class="table table-bordered">
+
+                <!-- header -->
+                <tr class="well">
+                    <td><b>Item</b></td>
+                    <td class="tdCenter"><b>Quantity</b></td>
+                    <td class="tdRight"><b>Price</b></td>
+                    <td />
+                </tr>
+
+                <!-- empty cart message -->
+                <tr ng-hide="getTotalCount() > 0" >
+                    <td class="tdCenter" colspan="4">
+                        Your cart is empty.
+                    </td>
+                </tr>
+
+                <!-- cart items -->
+                <tr ng-repeat="item in items | orderBy:'name'">
+                    <td>{{item.name}}</td>
+                    <td class="tdCenter">
+                      <div class="input-append">
+                        <!-- use type=tel instead of  to prevent spinners -->
+                        <input
+                            class="span3 text-center" type="tel" 
+                            ng-model="item.quantity" 
+                            ng-change="saveItems()" />
+                        <button 
+                            class="btn btn-success" type="button" 
+                            ng-disabled="item.quantity >= 100"
+                            ng-click="addItem(item.id, item.name, item.price, +1)">+</button>
+                        <button 
+                            class="btn btn-inverse" type="button" 
+                            ng-disabled="item.quantity <= 1"
+                            ng-click="addItem(item.id, item.name, item.price, -1)">-</button>
+                      </div>
+                    </td>
+                    <td class="tdRight">{{item.price * item.quantity | currency}}</td>
+                    <td class="tdCenter" title="remove from cart">
+                        <a href="" ng-click="addItem(item.id, item.name, item.price, -10000000)" >
+                            <i class="icon-remove" />
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- footer -->
+                <tr class="well">
+                    <td><b>Total</b></td>
+                    <td class="tdCenter"><b>{{getTotalCount()}}</b></td>
+                    <td class="tdRight"><b>{{getTotalPrice() | currency}}</b></td>
+                    <td />
+                </tr>
+            </table>
+        </div>
+
+        <!-- buttons -->
+        <div class="span4">
+            <p class="text-info">
+                <a 
+                    class="btn btn-block" href="#/">
+                    <i class="icon-chevron-left" /> back to store
+                </a>
+                <button 
+                    class="btn btn-block btn-danger" 
+                    ng-click="clearItems()" 
+                    ng-disabled="getTotalCount() < 1" >
+                    <i class="icon-trash icon-white" /> clear cart
+                </button>
+            </p>
+            <br />
+                <p>Please fill the email address it can't be blank</p>
+                <form name="userForm" ng-submit="checkout()" class="css-form" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+                <div class="input-prepend">
+                      <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input class="span12" id="prependedInput" type="email" placeholder="Email" name="email" ng-model="email" required />
+                </div>
+                <br/>
+                <p ng-show="userForm.email.$invalid && !userForm.email.$pristine">Enter a valid email.</p>
+                    <button
+                        class="btn btn-block btn-primary"
+                        type="submit"
+                        ng-disabled="getTotalCount() < 1 || userForm.$invalid">
+                        <i class="icon-ok icon-white" /> check out
+                    </button>
+                </form>
+        </div>
+    </div>
+</div>

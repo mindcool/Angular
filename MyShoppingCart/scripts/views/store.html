@@ -4,21 +4,18 @@
     When you are done, click the shopping cart icon to review your order and check out.
 </p>
 
-<form>
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Food Search" ng-model="searchFood">
-        </div>      
-    </div>
-</form>
+<div class="input-prepend">
+      <span class="add-on"><i class="icon-search"></i></span>
+      <input class="span12" id="prependedInput" type="text" placeholder="Food Search" ng-model="searchFood">
+</div>
+
 <table class="table table-bordered table-striped">
   <thead>
     <tr class="well">
     <td class="tdRight" colspan="4">
       <a href="#/cart" title="go to shopping cart"
          ng-disabled="getTotalCount() < 1">
-         <i class="icon-shopping-cart" />
+         <i class="icon-shopping-cart"></i>
          <b>{{getTotalCount()}}</b> items,
          <b>{{getTotalPrice() | currency}}</b>
       </a>
@@ -30,15 +27,15 @@
         <td>
             <a href="#/" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                 Name
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="sortType == 'name' && !sortReverse" class="icon-chevron-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="icon-chevron-up"></span>
             </a>
         </td>
         <td>
             <a href="#/" ng-click="sortType = 'price'; sortReverse = !sortReverse">
                 Price
-            <span ng-show="sortType == 'price' && !sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="sortType == 'price' && sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="sortType == 'price' && !sortReverse" class="icon-chevron-down"></span>
+            <span ng-show="sortType == 'price' && sortReverse" class="icon-chevron-up"></span>
             </a>
         </td>
         <td>
@@ -70,7 +67,7 @@
     <td class="tdRight" colspan="4">
       <a href="#/cart" title="go to shopping cart"
          ng-disabled="getTotalCount() < 1">
-         <i class="icon-shopping-cart" />
+         <i class="icon-shopping-cart"></i>
          <b>{{getTotalCount()}}</b> items,
          <b>{{getTotalPrice() | currency}}</b>
       </a>

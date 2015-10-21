@@ -2,7 +2,6 @@
 td.tdRight{
   text-align: right;
 }
-
 .table td.tdCenter {
   text-align: center;
 }
@@ -10,3 +9,11 @@ td.tdRight{
 .table-nonfluid {
    width: auto;
 }
+.css-form input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+    background-color: #78FA89;
+}
+

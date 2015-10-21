@@ -1,5 +1,5 @@
 var app = angular
-  .module('XactPet', ['ngRoute', 'ngSanitize'])
+  .module('XactPet', ['ngRoute', 'ngSanitize', 'ngAnimate', 'toaster' ])
   .config(function ($routeProvider) {
     $routeProvider      
       .when('/', {
@@ -11,6 +11,10 @@ var app = angular
         controller: 'StoreController'
       })
       .when('/cart', {
+        templateUrl: 'scripts/views/cart.html',
+        controller: 'StoreController'
+      })
+      .when('/complete', {
         templateUrl: 'scripts/views/cart.html',
         controller: 'StoreController'
       })

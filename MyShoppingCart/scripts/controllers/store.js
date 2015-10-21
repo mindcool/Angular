@@ -1,21 +1,38 @@
 
-app.controller("StoreController", function($scope, appData, $routeParams, $sce, $window){
-	
-
+app.controller("StoreController", function($scope, appData, $routeParams, $sce, $window, toaster, $filter){
 	$scope.sortType     = 'name'; // set the default sort type
 	$scope.sortReverse  = false;  // set the default sort order
 	$scope.searchFood   = '';     // set the default search/filter term
+	//After checkout if the user close the application the state of cart should be saved to the localstorage
+	$scope.clearCart 	= false;
 	$scope.items = [];
 	getProductList();
 	//Load cart from local storage
 	loadRemoteData();
-	$scope.products.getProduct = function(id){
-		for (var i = 0; i < $scope.products.length; i++) {
-		    if ($scope.products[i].id == id)
-		      return $scope.products[i];
+
+	$scope.getProduct = function(id){
+		if(!$scope.product){
+			$scope.product = {};
 		}
-		return null;
+		appData.getProductData().then(function(data){
+			for(var i = 0; i < data.data.length; i++) {
+				if(data.data[i].id == id) {
+					$scope.product = new Product(data.data[i].id, data.data[i].name, data.data[i].price, data.data[i].shortDescription, data.data[i].longDescription, data.data[i].directions, data.data[i].ingredients);
+				}
+        	}
+		})
 	}
+
+	// save the stage of card if there is no checkout
+	$window.addEventListener( "beforeunload", function(){
+		if ($scope.clearCart) {
+			//If checkout done clear cart before unload
+			$scope.clearItems();
+		}
+			//Do not clear cart because there is no checkout save cart for customer return
+			$scope.saveItems();
+			$scope.clearCart = false;
+	});
 
 	function getProductList(){
 		if(!$scope.products){
@@ -25,17 +42,20 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 			for(var i = 0; i < data.data.length; i++) {
             	$scope.products.push(new Product(data.data[i].id, data.data[i].name, data.data[i].price, data.data[i].shortDescription, data.data[i].longDescription, data.data[i].directions, data.data[i].ingredients));
         	}
-        console.log($scope.products);
 		})
 	}
 
 	if ($routeParams.id != null) {
-		$scope.product = $scope.products.getProduct($routeParams.id);
+		$scope.getProduct($routeParams.id);
 	}
 
 	//Add or remove items from the cart
 	$scope.addItem = function(id, name, price, quantity){
 		quantity = isNaN(quantity) ? 0 : quantity;
+		if($scope.getTotalCount(id) + quantity > 100) {
+			toaster.pop('error', 'Max  100 of any one item');
+			return;
+		}
 		//If quantity not zero so there is an item to add
 	    if (quantity != 0) {
 	    	var itemFound = false;
@@ -45,7 +65,7 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 	            if (item.id == id) {
 	                itemFound = true;
 	            	//Update the quantity of item
-	                item.quantity = item.quantity.toNumber() + quantity.toNumber();
+	                item.quantity = item.quantity + (isNaN(quantity) ? 0 : quantity);
 	                //If item deleted remove it from $scope.items array
 	                if (item.quantity <= 0) {
 	                    $scope.items.splice(i, 1);
@@ -70,7 +90,7 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 	        var item = $scope.items[i];
 	        //If id is empty count all items if there is an id just count the # of that items
 	        if (id == null || item.id == id) {
-	            count += isNaN(item.quantity) ? 0 : item.quantity;;
+	            count += (isNaN(item.quantity) ? 0 : item.quantity);
 	        }
 	    }
 	    return count;
@@ -90,16 +110,21 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 
 	//Clear shopping cart
 	$scope.clearItems = function() {	
-
+		$scope.items = [];
+    	$scope.saveItems();
 	}
 	//Check out the cart
 	$scope.checkout = function(){
+		$scope.checkoutform = "";
+		$scope.checkoutform += "<table class='table table-bordered table-striped'><thead>";
 
-	}
-
-	//Remove the item from the cart
-	$scope.removeItem = function(item) {
-		
+		$scope.checkoutform += "<tr class='well'><td class='tdRight' colspan='4'>Items Shipped To: <i class='icon-envelope'></i> "+$scope.email+" Total Price:"+$filter('currency')($scope.getTotalPrice())+"</b></td></tr><tr><td>Name</td><td>Quantity</td><td>Total Price</td></tr></thead>";
+		for (var i = 0; i < $scope.items.length; i++) {
+			$scope.checkoutform += "<tr><td>"+$scope.items[i].name+"</td><td>"+$scope.items[i].quantity+"</td><td>"+$filter('currency')($scope.items[i].price * $scope.items[i].quantity)+"$ </td></tr>"
+		}
+		$scope.checkoutform += "</table>";
+		$scope.clearCart = true;
+		$scope.clearItems();
 	}
 
 	$scope.saveItems = function() {
@@ -126,7 +151,7 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 	                var item = items[i];
 	                //Make sure the return item got all properties set
 	                if (item.id != null && item.name != null && item.price != null && item.quantity != null) {
-	                    item = new cartItem(item.if, item.name, item.price, item.quantity);
+	                    item = new cartItem(item.id, item.name, item.price, item.quantity);
 	                    $scope.items.push(item);
 	                }
 	            }
@@ -135,7 +160,6 @@ app.controller("StoreController", function($scope, appData, $routeParams, $sce, 
 	            // ignore errors while loading...
 	        }
 	    }
-	    console.log("Cart has following items"+$scope.items);
     }
 
     //----------------------------------------------------------------
